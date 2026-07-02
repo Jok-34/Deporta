@@ -1,25 +1,28 @@
 import { TiArrowSortedDown } from "react-icons/ti";
+import logo from "../assets/logo/nuestroLogo.jpg";
 
 function Navbar() {
   return (
     <nav className="flex items-center justify-between px-8 py-4 bg-white shadow-md">
 
-      <h1 className="text-2xl font-bold text-lime-600">
-        DEPORTA
-      </h1>
+      <img
+  src={logo}
+  alt="Logo Deporta"
+  className="h-16 object-contain"
+/>
 
       <ul className="flex gap-8 font-medium text-gray-700">
 
-        <li className="flex items-center gap-2 cursor-pointer hover:text-lime-500">
+        <li className="uppercase flex items-center gap-2 cursor-pointer hover:text-lime-500">
           Registrar Complejo
           <TiArrowSortedDown size={24} />
         </li>
 
-        <li className="cursor-pointer hover:text-lime-500">
+        <li className="uppercase cursor-pointer hover:text-lime-500">
           ¿Cómo Reservar?
         </li>
 
-        <li className="flex items-center gap-2 cursor-pointer hover:text-lime-500">
+        <li className="uppercase flex items-center gap-2 cursor-pointer hover:text-lime-500">
           Buscar por Distrito
           <TiArrowSortedDown size={24} />
         </li>
