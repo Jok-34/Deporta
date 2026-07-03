@@ -8,7 +8,7 @@ function Navbar() {
       <img
   src={logo}
   alt="Logo Deporta"
-  className="h-16 object-contain"
+  className="h-20 object-contain"
 />
 
       <ul className="flex gap-8 font-medium text-gray-700">

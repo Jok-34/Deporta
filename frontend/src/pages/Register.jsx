@@ -1,9 +1,7 @@
+import RegisterForm from "../components/RegisterForm";
+
 function Register() {
-  return (
-    <h1>Register</h1>
-  );
+  return <RegisterForm />;
 }
 
 export default Register;
-
-Register.jsx

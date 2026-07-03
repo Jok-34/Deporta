@@ -10,7 +10,7 @@ function MainLayout({ children }) {
         {children}
       </main>
 
-      <Footer />
+      {/*<Footer />*/}
     </>
   );
 }
