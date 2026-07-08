@@ -1,19 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-function RegisterForm() {
-   const navigate = useNavigate();
+import { useNavigate } from "react-router-dom";
+function RegisterComplexForm() {
+    const navigate = useNavigate();
 
-  const [adminComplejo, setAdminComplejo] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (adminComplejo) {
-      navigate("/register-complex");
-      return;
-    }
-  };
-
+const handleSubmit = (e) => {
+  e.preventDefault();
+  navigate("/register-success");
+};
   return (
     <section className="flex min-h-screen">
       {/* Panel izquierdo */}
@@ -22,26 +14,17 @@ function RegisterForm() {
           className="text-white text-[40px] font-bold tracking-[3%] mb-10"
           style={{ fontFamily: "Instrument Sans" }}
         >
-          Accede a tus
+          ¡Registra tu
           <br />
-          espacios deportivos
-          <br />
-          favoritos y comparte
-          <br />
-          el deporte con los
-          <br />
-          tuyos.
+          complejo!
         </h1>
 
         <p
           className="text-white text-[21px] max-w-md"
           style={{ fontFamily: "Red Hat Text" }}
         >
-          Crea tu cuenta para encontrar canchas o
-          piscinas cercanas en tiempo real, guardar
-          tus lugares preferidos, reprogramar turnos
-          fácilmente y acceder a descuentos
-          exclusivos.
+          Registra tu complejo y encuentra potenciales clientes, desde tu
+          dashboard único podrás administrar tus reservas y más.
         </p>
       </div>
 
@@ -52,58 +35,62 @@ function RegisterForm() {
             className="text-center text-[34px] font-bold mb-10"
             style={{ fontFamily: "Instrument Sans" }}
           >
-            Crea tu cuenta
+            Registro del complejo
           </h2>
 
           <form  onSubmit={handleSubmit} className="flex flex-col gap-4">
+            {/* Nombre de la empresa */}
             <div>
               <label
                 className="block mb-2 text-[#777777] text-[14.5px] font-bold"
                 style={{ fontFamily: "Instrument Sans" }}
               >
-                Nombre
+                Nombre de la empresa
               </label>
 
               <input
                 type="text"
-                placeholder="Ingresa tu nombre"
+                placeholder="Ingresa el nombre"
                 className="w-full rounded-full border border-gray-300 px-6 py-3"
                 style={{ fontFamily: "Red Hat Text" }}
               />
             </div>
 
+            {/* RUC */}
             <div>
               <label
                 className="block mb-2 text-[#777777] text-[14.5px] font-bold"
                 style={{ fontFamily: "Instrument Sans" }}
               >
-                Apellidos
+                RUC
               </label>
 
               <input
                 type="text"
-                placeholder="Ingresa tus apellidos"
+                placeholder="Ingresa el RUC"
                 className="w-full rounded-full border border-gray-300 px-6 py-3"
                 style={{ fontFamily: "Red Hat Text" }}
               />
             </div>
 
+            {/* Correo comercial */}
             <div>
               <label
                 className="block mb-2 text-[#777777] text-[14.5px] font-bold"
                 style={{ fontFamily: "Instrument Sans" }}
               >
-                Correo
+                Correo comercial
               </label>
 
               <input
                 type="email"
-                placeholder="Ingresa tu correo"
+                placeholder="Ingresa el correo"
                 className="w-full rounded-full border border-gray-300 px-6 py-3"
                 style={{ fontFamily: "Red Hat Text" }}
               />
             </div>
 
+            {/* Teléfono */}
             <div>
               <label
                 className="block mb-2 text-[#777777] text-[14.5px] font-bold"
@@ -114,67 +101,42 @@ function RegisterForm() {
 
               <input
                 type="tel"
-                placeholder="Ingresa tu número"
+                placeholder="Ingresa el número"
                 className="w-full rounded-full border border-gray-300 px-6 py-3"
                 style={{ fontFamily: "Red Hat Text" }}
               />
             </div>
 
+            {/* Distrito */}
             <div>
               <label
                 className="block mb-2 text-[#777777] text-[14.5px] font-bold"
                 style={{ fontFamily: "Instrument Sans" }}
               >
-                Contraseña
+                Distrito
               </label>
 
               <input
-                type="password"
-                placeholder="Ingresa tu contraseña"
+                type="text"
+                placeholder="Ingresa tu distrito"
                 className="w-full rounded-full border border-gray-300 px-6 py-3"
                 style={{ fontFamily: "Red Hat Text" }}
               />
             </div>
 
-            <div className="flex items-center gap-3 mt-2">
-  <input
-    id="adminComplejo"
-  type="checkbox"
-  checked={adminComplejo}
-  onChange={(e) => setAdminComplejo(e.target.checked)}
-  className="w-5 h-5 accent-[var(--color-secondary)] cursor-pointer"
-  />
-
-  <label
-    htmlFor="adminComplejo"
-    className="text-[14px] font-bold text-[#777777] cursor-pointer"
-    style={{ fontFamily: "Instrument Sans" }}
-  >
-    ¿Desea administrar su complejo?
-  </label>
-</div>
-
+            {/* Botón */}
             <button
+              type="submit"
               className="mt-6 rounded-full py-4 bg-[var(--color-primary)] text-black"
               style={{ fontFamily: "Prompt" }}
             >
-              REGISTRARSE
+              REGISTRAR
             </button>
           </form>
-
-          <p
-            className="text-center mt-10 text-[#777777] font-bold"
-            style={{ fontFamily: "Instrument Sans" }}
-          >
-            ¿Ya tienes una cuenta?{" "}
-            <Link to="/login" className="text-[#86BE00]">
-                Iniciar Sesión
-            </Link>
-          </p>
         </div>
       </div>
     </section>
   );
 }
 
-export default RegisterForm;
+export default RegisterComplexForm;
