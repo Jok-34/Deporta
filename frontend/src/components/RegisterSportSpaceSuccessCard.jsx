@@ -1,6 +1,8 @@
 import cancha5 from "../assets/images/cancha5.jpg";
+import { useNavigate } from "react-router-dom";
 
 function RegisterSportSpaceSuccessCard() {
+  const navigate = useNavigate();
   return (
     <section className="min-h-screen bg-white relative overflow-hidden">
       {/* Imagen superior */}
@@ -24,6 +26,7 @@ function RegisterSportSpaceSuccessCard() {
           </h1>
 
           <button
+            onClick={() => navigate("/dashboard")}
             className="mt-12 bg-[var(--color-primary)] rounded-full px-12 py-4 text-black text-[12px]"
             style={{ fontFamily: "Prompt" }}
           >
@@ -31,6 +34,7 @@ function RegisterSportSpaceSuccessCard() {
           </button>
 
           <button
+             onClick={() => navigate("/")}
             className="mt-6 bg-[var(--color-primary)] rounded-full px-12 py-4 text-black text-[12px]"
             style={{ fontFamily: "Prompt" }}
           >

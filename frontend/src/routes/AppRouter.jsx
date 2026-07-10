@@ -8,12 +8,14 @@ import RegisterComplex from "../pages/RegisterComplex";
 import RegisterSuccess from "../pages/RegisterSuccess";
 import RegisterSportSpace from "../pages/RegisterSportSpace";
 import RegisterSportSpaceSuccess from "../pages/RegisterSportSpaceSuccess";
+import Dashboard from "../pages/Dashboard";
+import ReservationGuide from "../pages/ReservationGuide";
 
 function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/search" element={<SearchFields />} />
@@ -21,6 +23,8 @@ function AppRouter() {
         <Route path="/register-success" element={<RegisterSuccess />} />
         <Route path="/register-sport-space" element={<RegisterSportSpace />} />
         <Route path="/register-sport-space-success" element={<RegisterSportSpaceSuccess />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/reservation-guide"element={<ReservationGuide />} />
       </Routes>
     </BrowserRouter>
   );

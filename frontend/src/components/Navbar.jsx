@@ -1,7 +1,9 @@
 import { TiArrowSortedDown } from "react-icons/ti";
 import logo from "../assets/logo/nuestroLogo.jpg";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
   return (
     <nav className="flex items-center justify-between px-8 py-4 bg-white shadow-md">
 
@@ -18,9 +20,11 @@ function Navbar() {
           <TiArrowSortedDown size={24} />
         </li>
 
-        <li className="uppercase cursor-pointer hover:text-lime-500">
-          ¿Cómo Reservar?
-        </li>
+        <button
+  onClick={() => navigate("/reservation-guide")}
+>
+  ¿COMO RESERVAR?
+</button>
 
         <li className="uppercase flex items-center gap-2 cursor-pointer hover:text-lime-500">
           Buscar por Distrito

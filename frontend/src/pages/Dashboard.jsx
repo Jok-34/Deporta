@@ -1,6 +1,8 @@
 import Sidebar from "../components/dashboard/Sidebar";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import DashboardStats from "../components/dashboard/DashboardStats";
+import ReservationTable from "../components/dashboard/ReservationTable";
+import DashboardCharts from "../components/dashboard/DashboardCharts";
 
 function Dashboard() {
   return (
@@ -12,7 +14,18 @@ function Dashboard() {
 
         <DashboardStats />
 
-        {/* Aquí irán la tabla y los gráficos */}
+        {/* Tabla + gráficos */}
+        <div className="flex gap-8 mt-6 items-start">
+          {/* Izquierda */}
+          <div className="w-[55%]">
+            <ReservationTable />
+          </div>
+
+          {/* Derecha */}
+          <div className="w-[45%]">
+            <DashboardCharts />
+          </div>
+        </div>
       </main>
     </div>
   );

@@ -1,4 +1,4 @@
-import logoDeporta from "../../assets/images/logo/nuestroLogo.jpg";
+import logoDeporta from "../../assets/logo/nuestroLogo.jpg";
 
 function DashboardHeader() {
   return (
