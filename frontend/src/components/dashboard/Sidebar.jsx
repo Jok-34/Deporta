@@ -27,7 +27,7 @@ function Sidebar() {
 
       {/* Botón */}
       <button
-       onClick={() => navigate("/home")}
+       onClick={() => navigate("/")}
         className="mb-8 bg-white text-[var(--color-secondary)] rounded-full px-4 py-2 text-[12px]"
         style={{ fontFamily: "Prompt" }}
       >

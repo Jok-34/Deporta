@@ -1,6 +1,8 @@
 import celular from "../assets/images/celular.jpg";
+import { useNavigate } from "react-router-dom";
 
 function ReservationGuide() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-20">
 
@@ -26,6 +28,7 @@ function ReservationGuide() {
         </p>
 
         <button
+           onClick={() => navigate("/search-courts")}
           className="mt-10 bg-[var(--color-primary)] text-black px-12 py-4 rounded-full"
           style={{ fontFamily: "Prompt" }}
         >
