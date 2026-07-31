@@ -6,13 +6,14 @@ function RegisterForm() {
   const [adminComplejo, setAdminComplejo] = useState(false);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (adminComplejo) {
-      navigate("/register-complex");
-      return;
-    }
-  };
+  if (adminComplejo) {
+    navigate("/register-complex");
+  } else {
+    navigate("/login");
+  }
+};
 
   return (
     <section className="flex min-h-screen">
@@ -150,7 +151,7 @@ function RegisterForm() {
     className="text-[14px] font-bold text-[#777777] cursor-pointer"
     style={{ fontFamily: "Instrument Sans" }}
   >
-    ¿Desea administrar su complejo?
+    Esta cuenta administrará un complejo deportivo
   </label>
 </div>
 
