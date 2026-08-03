@@ -1,5 +1,39 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 function LoginForm() {
+  const navigate = useNavigate();
+
+  const [correo, setCorreo] = useState("");
+  const [contrasena, setContrasena] = useState("");
+  const [mensaje, setMensaje] = useState("");
+
+  const handleLogin = async (e) => {
+  e.preventDefault();
+
+  try {
+    const respuesta = await axios.post(
+      "http://localhost:3000/api/usuarios/login",
+      {
+        correo,
+        contrasena,
+      }
+    );
+
+    setMensaje("");
+
+    const usuario = respuesta.data.usuario;
+
+    if (usuario.id_rol === 1) {
+      navigate("/dashboard");
+    } else {
+      navigate("/search-courts");
+    }
+  } catch (error) {
+    setMensaje(error.response?.data?.mensaje || "Error al iniciar sesión");
+  }
+};
+
   return (
     <section className="flex min-h-screen">
 
@@ -39,7 +73,9 @@ function LoginForm() {
             Iniciar sesión
           </h2>
 
-          <form className="flex flex-col gap-5">
+          <form
+          onSubmit={handleLogin} 
+          className="flex flex-col gap-5">
 
             <div>
               <label
@@ -50,10 +86,15 @@ function LoginForm() {
               </label>
 
               <input
-                type="email"
-                placeholder="Ingresa tu correo"
-                className="w-full rounded-full border border-gray-300 px-6 py-3"
-                style={{ fontFamily: "Red Hat Text" }}
+              type="email"
+              placeholder="Ingresa tu correo"
+              value={correo}
+             onChange={(e) => {
+  setCorreo(e.target.value);
+  setMensaje("");
+}}
+              className="w-full rounded-full border border-gray-300 px-6 py-3"
+              style={{ fontFamily: "Red Hat Text" }}
               />
             </div>
 
@@ -66,11 +107,16 @@ function LoginForm() {
               </label>
 
               <input
-                type="password"
-                placeholder="Ingresa tu contraseña"
-                className="w-full rounded-full border border-gray-300 px-6 py-3"
-                style={{ fontFamily: "Red Hat Text" }}
-              />
+  type="password"
+  placeholder="Ingresa tu contraseña"
+  value={contrasena}
+  onChange={(e) => {
+  setContrasena(e.target.value);
+  setMensaje("");
+}}
+  className="w-full rounded-full border border-gray-300 px-6 py-3"
+  style={{ fontFamily: "Red Hat Text" }}
+/>
             </div>
 
             <button
@@ -79,6 +125,11 @@ function LoginForm() {
             >
               INICIAR SESIÓN
             </button>
+            {mensaje && (
+  <p className="text-red-600 text-center text-sm mt-2">
+    {mensaje}
+  </p>
+)}
 
           </form>
 

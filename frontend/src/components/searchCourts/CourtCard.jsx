@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 function CourtCard({
   image,
   available = true,
-  name = "Polideportivo",
+  name,
+  complejo,
+  deporte,
   description = "Inicia sesión para revisar tus reservas, agendar un nuevo partido.",
-  price = "60.00",
+  price,
   duration = "1h",
 }) {
   const navigate = useNavigate();
@@ -46,6 +48,20 @@ function CourtCard({
         >
           {name}
         </h3>
+
+        <p
+          className="text-[#5F5F5F] text-sm mb-1"
+          style={{ fontFamily: "Red Hat Text" }}
+        >
+          <strong>Complejo:</strong> {complejo}
+        </p>
+
+        <p
+          className="text-[#5F5F5F] text-sm mb-3"
+          style={{ fontFamily: "Red Hat Text" }}
+        >
+          <strong>Deporte:</strong> {deporte}
+        </p>
 
         <p
           className="text-[#5F5F5F] mb-4 leading-6"

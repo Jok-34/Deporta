@@ -1,10 +1,67 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 function RegisterSportSpaceForm() {
+
+  const [complejos, setComplejos] = useState([]);
+const [deportes, setDeportes] = useState([]);
+
+const [formData, setFormData] = useState({
+  id_complejo: "",
+  nombre: "",
+  id_deporte: "",
+  precio_hora: "",
+  imagen: "",
+});
+useEffect(() => {
+  obtenerComplejos();
+  obtenerDeportes();
+}, []);
+const obtenerComplejos = async () => {
+  try {
+    const respuesta = await axios.get(
+      "http://localhost:3000/api/complejos"
+    );
+
+    setComplejos(respuesta.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const obtenerDeportes = async () => {
+  try {
+    const respuesta = await axios.get(
+      "http://localhost:3000/api/deportes"
+    );
+
+    setDeportes(respuesta.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
+
     const navigate = useNavigate();
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
-  navigate("/register-sport-space-success");
+
+  try {
+    await axios.post(
+      "http://localhost:3000/api/espacios/register",
+      formData
+    );
+
+    navigate("/register-sport-space-success");
+  } catch (error) {
+    console.error(error);
+  }
 };
   return (
     <section className="flex min-h-screen">
@@ -44,11 +101,22 @@ const handleSubmit = (e) => {
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {/* Seleccionar complejo */}
             <select
-              className="w-full rounded-full border border-gray-300 px-6 py-3 text-[#777777]"
-              style={{ fontFamily: "Red Hat Text" }}
-            >
-              <option>Seleccionar complejo</option>
-            </select>
+  name="id_complejo"
+  value={formData.id_complejo}
+  onChange={handleChange}
+  className="w-full rounded-full border border-gray-300 px-6 py-3"
+>
+  <option value="">Selecciona un complejo</option>
+
+  {complejos.map((complejo) => (
+    <option
+      key={complejo.idCOMPLEJO}
+      value={complejo.idCOMPLEJO}
+    >
+      {complejo.nombre}
+    </option>
+  ))}
+</select>
 
             {/* Nombre */}
             <div>
@@ -60,11 +128,14 @@ const handleSubmit = (e) => {
               </label>
 
               <input
-                type="text"
-                placeholder="Ingresa el nombre"
-                className="w-full rounded-full border border-gray-300 px-6 py-3"
-                style={{ fontFamily: "Red Hat Text" }}
-              />
+                  type="text"
+                  name="nombre"
+                  value={formData.nombre}
+                  onChange={handleChange}
+                  placeholder="Ingresa el nombre"
+                  className="w-full rounded-full border border-gray-300 px-6 py-3"
+                  style={{ fontFamily: "Red Hat Text" }}
+                />
             </div>
 
             {/* Deporte */}
@@ -76,12 +147,23 @@ const handleSubmit = (e) => {
                 Deporte
               </label>
 
-              <input
-                type="text"
-                placeholder="Ingresa el deporte"
+              <select
+                name="id_deporte"
+                value={formData.id_deporte}
+                onChange={handleChange}
                 className="w-full rounded-full border border-gray-300 px-6 py-3"
-                style={{ fontFamily: "Red Hat Text" }}
-              />
+              >
+                <option value="">Selecciona un deporte</option>
+
+                {deportes.map((deporte) => (
+                  <option
+                    key={deporte.idDEPORTE}
+                    value={deporte.idDEPORTE}
+                  >
+                    {deporte.nombre}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Precio */}
@@ -94,11 +176,14 @@ const handleSubmit = (e) => {
               </label>
 
               <input
-                type="number"
-                placeholder="Ingresa el precio"
-                className="w-full rounded-full border border-gray-300 px-6 py-3"
-                style={{ fontFamily: "Red Hat Text" }}
-              />
+                  type="number"
+                  name="precio_hora"
+                  value={formData.precio_hora}
+                  onChange={handleChange}
+                  placeholder="Ingresa el precio"
+                  className="w-full rounded-full border border-gray-300 px-6 py-3"
+                  style={{ fontFamily: "Red Hat Text" }}
+                />
             </div>
 
             {/* Imagen */}
