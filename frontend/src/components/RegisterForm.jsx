@@ -1,17 +1,52 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 function RegisterForm() {
    const navigate = useNavigate();
 
   const [adminComplejo, setAdminComplejo] = useState(false);
 
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({
+  nombre: "",
+  apellido: "",
+  correo: "",
+  telefono: "",
+  contrasena: "",
+});
+
+const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
+
+  const handleSubmit = async (e) => {
   e.preventDefault();
 
-  if (adminComplejo) {
-    navigate("/register-complex");
-  } else {
-    navigate("/login");
+  try {
+    await axios.post("http://localhost:3000/api/usuarios/register", {
+      id_rol: adminComplejo ? 1 : 2,
+      nombre: formData.nombre,
+      apellido: formData.apellido,
+      correo: formData.correo,
+      telefono: formData.telefono,
+      contrasena: formData.contrasena,
+    });
+
+    if (adminComplejo) {
+      navigate("/register-complex");
+    } else {
+      navigate("/login");
+    }
+
+  } catch (error) {
+    console.error(error);
+
+    alert(
+      error.response?.data?.mensaje ||
+      "No se pudo registrar el usuario."
+    );
   }
 };
 
@@ -67,6 +102,9 @@ function RegisterForm() {
 
               <input
                 type="text"
+                name="nombre"
+                value={formData.nombre}
+                onChange={handleChange}
                 placeholder="Ingresa tu nombre"
                 className="w-full rounded-full border border-gray-300 px-6 py-3"
                 style={{ fontFamily: "Red Hat Text" }}
@@ -82,11 +120,14 @@ function RegisterForm() {
               </label>
 
               <input
-                type="text"
-                placeholder="Ingresa tus apellidos"
-                className="w-full rounded-full border border-gray-300 px-6 py-3"
-                style={{ fontFamily: "Red Hat Text" }}
-              />
+                  type="text"
+                  name="apellido"
+                  value={formData.apellido}
+                  onChange={handleChange}
+                  placeholder="Ingresa tus apellidos"
+                  className="w-full rounded-full border border-gray-300 px-6 py-3"
+                  style={{ fontFamily: "Red Hat Text" }}
+                />
             </div>
 
             <div>
@@ -99,6 +140,9 @@ function RegisterForm() {
 
               <input
                 type="email"
+                name="correo"
+                value={formData.correo}
+                onChange={handleChange}
                 placeholder="Ingresa tu correo"
                 className="w-full rounded-full border border-gray-300 px-6 py-3"
                 style={{ fontFamily: "Red Hat Text" }}
@@ -115,6 +159,9 @@ function RegisterForm() {
 
               <input
                 type="tel"
+                name="telefono"
+                value={formData.telefono}
+                onChange={handleChange}
                 placeholder="Ingresa tu número"
                 className="w-full rounded-full border border-gray-300 px-6 py-3"
                 style={{ fontFamily: "Red Hat Text" }}
@@ -131,6 +178,9 @@ function RegisterForm() {
 
               <input
                 type="password"
+                name="contrasena"
+                value={formData.contrasena}
+                onChange={handleChange}
                 placeholder="Ingresa tu contraseña"
                 className="w-full rounded-full border border-gray-300 px-6 py-3"
                 style={{ fontFamily: "Red Hat Text" }}
