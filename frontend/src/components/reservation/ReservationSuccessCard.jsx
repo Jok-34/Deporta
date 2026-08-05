@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
-function ReservationSuccessCard({ reservation }) {
+function ReservationSuccessCard({
+  reservation,
+  mostrarBotonPago,
+}) {
   const navigate = useNavigate();
 
   const details = [
@@ -57,26 +60,30 @@ function ReservationSuccessCard({ reservation }) {
 
       <div className="flex justify-center gap-6 mt-10">
 
-        <button
-            onClick={() => navigate("/payment")}
-          className="w-[170px] h-[44px] rounded-full bg-[#C7F34A] hover:bg-[#b8e43f] transition"
-          style={{
-            fontFamily: "Prompt",
-            fontSize: "14px",
-          }}
-        >
-          REALIZAR PAGO
-        </button>
+        {
+  mostrarBotonPago && (
+    <button
+      onClick={() => navigate("/payment")}
+      className="w-[170px] h-[44px] rounded-full bg-[#C7F34A] hover:bg-[#b8e43f] transition"
+      style={{
+        fontFamily: "Prompt",
+        fontSize: "14px",
+      }}
+    >
+      REALIZAR PAGO
+    </button>
+  )
+}
 
         <button
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate("/")}
           className="w-[170px] h-[44px] rounded-full bg-[#C7F34A] hover:bg-[#b8e43f] transition"
           style={{
             fontFamily: "Prompt",
             fontSize: "14px",
           }}
         >
-          GUARDAR RESERVA
+          VOLVER AL INICIO
         </button>
 
       </div>

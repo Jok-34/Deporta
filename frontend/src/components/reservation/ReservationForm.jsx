@@ -33,23 +33,25 @@ const realizarReserva = async () => {
       localStorage.getItem("usuario")
     );
 
-    await axios.post(
-      "http://localhost:3000/api/reservas/register",
-      {
-        id_usuario: usuario.id,
-        id_espacio_deportivo: cancha.id,
-        fecha: reserva.fecha,
-        hora: reserva.hora,
-        horas: reserva.horas,
-      }
-    );
+    const respuesta = await axios.post(
+  "http://localhost:3000/api/reservas/register",
+  {
+    id_usuario: usuario.id,
+    id_espacio_deportivo: cancha.id,
+    fecha: reserva.fecha,
+    hora: reserva.hora,
+    horas: reserva.horas,
+  }
+);
 
-    navigate("/reservation-success", {
-      state: {
-        cancha,
-        reserva,
-      },
-    });
+navigate("/payment", {
+  state: {
+    idReserva: respuesta.data.id,
+    cancha,
+    reserva,
+    usuario,
+  },
+});
 
   } catch (error) {
 

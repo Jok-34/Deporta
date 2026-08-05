@@ -5,11 +5,14 @@ import { useLocation } from "react-router-dom";
 function ReservationSuccess() {
   const { state } = useLocation();
 
-const { cancha, reserva } = state || {};
+const {
+  cancha,
+  reserva,
+  usuario,
+  metodoPago,
+} = state || {};
 
-const usuario = JSON.parse(
-  localStorage.getItem("usuario")
-);
+
 
 console.log(cancha);
 console.log(reserva);
@@ -59,9 +62,16 @@ const horaFin = calcularHoraFin(reserva.hora, reserva.horas);
     Number(reserva.horas)
   ).toFixed(2),
 
-  metodoPago: "Pendiente",
+ metodoPago:
+  metodoPago === "1"
+    ? "Tarjeta"
+    : metodoPago === "2"
+    ? "Yape"
+    : metodoPago === "3"
+    ? "Efectivo"
+    : "Pendiente",
 
-  estadoPago: "Pendiente",
+  estadoPago: metodoPago ? "PAGADO" : "Pendiente",
 
 };
 
@@ -78,7 +88,10 @@ const horaFin = calcularHoraFin(reserva.hora, reserva.horas);
 
       {/* Tarjeta */}
       <div className="relative flex justify-center items-start min-h-screen pt-8 pb-8">
-    <ReservationSuccessCard reservation={reservation} />
+    <ReservationSuccessCard
+    reservation={reservation}
+    mostrarBotonPago={reservation.estadoPago !== "PAGADO"}
+/>
 </div>
 
     </section>

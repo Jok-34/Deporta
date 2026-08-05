@@ -1,4 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 import visa from "../../assets/images/visa.png";
 import mastercard from "../../assets/images/mastercard.png";
@@ -6,19 +8,75 @@ import yape from "../../assets/images/yape.png";
 
 function PaymentCard() {
 
+  const [metodoPago, setMetodoPago] = useState("");
+
   const navigate = useNavigate();
 
+  const location = useLocation();
+
+const {
+  cancha,
+  reserva,
+  usuario,
+  idReserva,
+} = location.state;
+
+console.log(cancha);
+console.log(reserva);
+console.log(usuario);
+console.log(idReserva);
+
   const details = [
-    { label: "NOMBRE", value: "Andres" },
-    { label: "APELLIDOS", value: "Gutierres Paredes" },
-    { label: "CORREO", value: "andres123@gmail.com" },
-    { label: "TELÉFONO", value: "967456499" },
-    { label: "FECHA", value: "20/07/2026" },
-    { label: "HORA", value: "6:00 PM" },
-    { label: "CANTIDAD DE HORAS", value: "2" },
-    { label: "DESCUENTO", value: "0%" },
-    { label: "TOTAL A PAGAR", value: "S/. 120.00" },
-  ];
+  { label: "NOMBRE", value: usuario.nombre },
+  { label: "APELLIDOS", value: usuario.apellido },
+  { label: "CORREO", value: usuario.correo },
+  { label: "TELÉFONO", value: usuario.telefono },
+  { label: "FECHA", value: reserva.fecha },
+  { label: "HORA", value: reserva.hora },
+  { label: "CANTIDAD DE HORAS", value: reserva.horas },
+  { label: "DESCUENTO", value: "0%" },
+  { label: "TOTAL A PAGAR", value: `S/. ${(Number(cancha.price) * Number(reserva.horas)).toFixed(2)}` },
+];
+
+const realizarPago = async () => {
+
+  if (!metodoPago) {
+    alert("Seleccione un método de pago.");
+    return;
+  }
+
+  try {
+
+    await axios.post(
+      "http://localhost:3000/api/pagos/register",
+      {
+        id_reserva: idReserva,
+        id_metodo_pago: Number(metodoPago),
+        monto: Number(cancha.price) * Number(reserva.horas),
+      }
+    );
+
+    navigate("/reservation-success", {
+      state: {
+        cancha,
+        reserva,
+        usuario,
+        metodoPago,
+      },
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      error.response?.data?.mensaje ||
+      "No se pudo registrar el pago."
+    );
+
+  }
+
+};
 
   return (
     <div className="w-[560px] bg-white rounded-xl shadow-2xl px-16 py-12">
@@ -67,7 +125,13 @@ function PaymentCard() {
 
         <label className="flex items-center gap-3 cursor-pointer">
 
-          <input type="radio" name="payment" />
+          <input
+              type="radio"
+              name="payment"
+              value="1"
+              checked={metodoPago === "1"}
+              onChange={(e) => setMetodoPago(e.target.value)}
+            />
 
           <img
             src={visa}
@@ -87,8 +151,13 @@ function PaymentCard() {
 
         <label className="flex items-center gap-3 cursor-pointer">
 
-          <input type="radio" name="payment" />
-
+          <input
+            type="radio"
+            name="payment"
+            value="2"
+            checked={metodoPago === "2"}
+            onChange={(e) => setMetodoPago(e.target.value)}
+          />
           <img
             src={yape}
             alt="Yape"
@@ -101,7 +170,13 @@ function PaymentCard() {
 
        <label className="flex items-center gap-3 cursor-pointer">
 
-  <input type="radio" name="payment" />
+  <input
+      type="radio"
+      name="payment"
+      value="3"
+      checked={metodoPago === "3"}
+      onChange={(e) => setMetodoPago(e.target.value)}
+    />
 
   <span
     className="text-xl"
@@ -120,6 +195,7 @@ function PaymentCard() {
       <div className="flex justify-center gap-6 mt-10">
 
         <button
+          onClick={realizarPago}
           className="w-[170px] h-[44px] rounded-full bg-[#C7F34A]"
           style={{
             fontFamily: "Prompt",
