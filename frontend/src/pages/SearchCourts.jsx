@@ -238,10 +238,7 @@ function SearchCourts() {
 
                   key={court.idESPACIO_DEPORTIVO}
 
-
-                  idESPACIO_DEPORTIVO={
-                    court.idESPACIO_DEPORTIVO
-                  }
+                  id={court.idESPACIO_DEPORTIVO}
 
 
                   name={

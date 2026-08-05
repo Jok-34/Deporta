@@ -1,34 +1,15 @@
 import { useEffect, useState } from "react";
 import ReservationForm from "../components/reservation/ReservationForm";
+import { useLocation } from "react-router-dom";
 
 import cancha5 from "../assets/images/cancha5.jpg";
 
 
 function Reservation() {
+  const location = useLocation();
 
-
-  const [canchaSeleccionada, setCanchaSeleccionada] = useState(null);
-
-
-
-  useEffect(() => {
-
-
-    const cancha =
-      JSON.parse(
-        localStorage.getItem("canchaSeleccionada")
-      );
-
-
-    setCanchaSeleccionada(cancha);
-
-
-  }, []);
-
-
-
-
-
+const cancha = location.state;
+console.log(cancha);
   return (
 
     <section className="min-h-screen bg-white relative overflow-hidden">
@@ -44,7 +25,7 @@ function Reservation() {
         style={{
 
           backgroundImage: `url(${
-            canchaSeleccionada?.image || cancha5
+            cancha?.image || cancha5
           })`,
 
         }}
@@ -60,15 +41,7 @@ function Reservation() {
       {/* Información + formulario */}
 
       <div className="relative flex justify-center pt-[60px]">
-
-
-        <ReservationForm
-
-          cancha={canchaSeleccionada}
-
-        />
-
-
+        <ReservationForm />
       </div>
 
 

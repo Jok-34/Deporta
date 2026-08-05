@@ -2,13 +2,13 @@ import { useNavigate } from "react-router-dom";
 
 
 function CourtCard({
-  idESPACIO_DEPORTIVO,
+  id,
   image,
   available = true,
   name,
   complejo,
   deporte,
-  description = "Inicia sesión para revisar tus reservas, agendar un nuevo partido.",
+  description,
   price,
   duration = "1h",
   aforo,
@@ -28,7 +28,7 @@ function CourtCard({
 
     const canchaSeleccionada = {
 
-      idESPACIO_DEPORTIVO,
+      id,
       image,
       name,
       complejo,
@@ -65,13 +65,13 @@ function CourtCard({
 
   const reservarCancha = () => {
 
+  const canchaSeleccionada = guardarCancha();
 
-    guardarCancha();
+  navigate("/reservation", {
+    state: canchaSeleccionada,
+  });
 
-    navigate("/reservation");
-
-
-  };
+};
 
 
 

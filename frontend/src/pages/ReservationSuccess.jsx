@@ -1,23 +1,69 @@
 import cancha5 from "../assets/images/cancha5.jpg";
 import ReservationSuccessCard from "../components/reservation/ReservationSuccessCard";
+import { useLocation } from "react-router-dom";
 
 function ReservationSuccess() {
+  const { state } = useLocation();
 
-  // Temporal (luego vendrá del backend)
+const { cancha, reserva } = state || {};
+
+const usuario = JSON.parse(
+  localStorage.getItem("usuario")
+);
+
+console.log(cancha);
+console.log(reserva);
+
+const calcularHoraFin = (horaInicio, cantidadHoras) => {
+  const [hora, minutos] = horaInicio.split(":").map(Number);
+
+  const fecha = new Date();
+  fecha.setHours(hora, minutos, 0, 0);
+  fecha.setHours(fecha.getHours() + Number(cantidadHoras));
+
+  return fecha.toTimeString().slice(0, 5);
+};
+
+const formatearFecha = (fecha) => {
+  const [anio, mes, dia] = fecha.split("-");
+  return `${dia}/${mes}/${anio}`;
+};
+
+const horaFin = calcularHoraFin(reserva.hora, reserva.horas);
+
+  
   const reservation = {
-    nombre: "Andres",
-    apellidos: "Gutierres Paredes",
-    correo: "andres123@gmail.com",
-    telefono: "967456499",
-    fecha: "20/07/2026",
-    horaInicio: "6:00 PM",
-    horaFin: "8:00 PM",
-    cantidadHoras: 2,
-    descuento: "0%",
-    total: "120.00",
-    metodoPago: "Yape",
-    estadoPago: "Pagado",
-  };
+
+  nombre: usuario.nombre,
+
+  apellidos: usuario.apellido,
+
+  correo: usuario.correo,
+
+  telefono: usuario.telefono,
+
+  fecha: formatearFecha(reserva.fecha),
+
+  horaInicio: reserva.hora,
+
+  horaFin: horaFin,
+
+  cantidadHoras: reserva.horas,
+
+  descuento: "0%",
+
+  precioHora: cancha.price,
+
+  total: (
+    Number(cancha.price) *
+    Number(reserva.horas)
+  ).toFixed(2),
+
+  metodoPago: "Pendiente",
+
+  estadoPago: "Pendiente",
+
+};
 
   return (
     <section className="min-h-screen bg-white relative overflow-hidden">

@@ -25,13 +25,14 @@ function LoginForm() {
 
     let valido = true;
 
+
     if (!correo.trim()) {
-      nuevosErrores.correo = "Ingrese su correo.";
-      valido = false;
-    } else if (!/\S+@\S+\.\S+/.test(correo)) {
-      nuevosErrores.correo = "Ingrese un correo válido.";
-      valido = false;
-    }
+  nuevosErrores.correo = "Ingrese su correo.";
+  valido = false;
+} else if (!/\S+@\S+\.\S+/.test(correo)) {
+  nuevosErrores.correo = "Ingrese un correo válido.";
+  valido = false;
+}
 
     if (!contrasena.trim()) {
       nuevosErrores.contrasena = "Ingrese su contraseña.";
@@ -55,11 +56,16 @@ function LoginForm() {
 
       const usuario = respuesta.data.usuario;
 
-      if (usuario.id_rol === 1) {
-        navigate("/dashboard");
-      } else {
-        navigate("/search-courts");
-      }
+          localStorage.setItem(
+            "usuario",
+            JSON.stringify(usuario)
+          );
+
+          if (usuario.id_rol === 1) {
+            navigate("/dashboard");
+          } else {
+            navigate("/search-courts");
+          }
 
     } catch (error) {
       setMensaje(

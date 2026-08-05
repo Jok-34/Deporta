@@ -5,17 +5,27 @@ import {
 
 export const registrarUsuario = async (req, res) => {
   try {
+
+    const usuarioExistente = await buscarUsuarioPorCorreo(req.body.correo);
+
+    if (usuarioExistente.length > 0) {
+      return res.status(400).json({
+        mensaje: "El correo ya está registrado.",
+      });
+    }
+
     const resultado = await crearUsuario(req.body);
 
     res.status(201).json({
-      mensaje: "Usuario registrado correctamente",
+      mensaje: "Usuario registrado correctamente.",
       id: resultado.insertId,
     });
+
   } catch (error) {
     console.error(error);
 
     res.status(500).json({
-      mensaje: "Error al registrar el usuario",
+      mensaje: "Error al registrar el usuario.",
     });
   }
 };
@@ -47,6 +57,7 @@ export const loginUsuario = async (req, res) => {
         nombre: usuario.nombre,
         apellido: usuario.apellido,
         correo: usuario.correo,
+        telefono: usuario.telefono,
         id_rol: usuario.id_rol,
       },
     });

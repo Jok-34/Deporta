@@ -13,9 +13,11 @@ function ReservationSuccessCard({ reservation }) {
     { label: "HORA FIN", value: reservation?.horaFin },
     { label: "CANTIDAD DE HORAS", value: reservation?.cantidadHoras },
     { label: "DESCUENTO", value: reservation?.descuento },
+    { label: "PRECIO POR HORA", value: `S/. ${reservation?.precioHora}`, },
     { label: "TOTAL A PAGAR", value: `S/. ${reservation?.total}` },
     { label: "MÉTODO DE PAGO", value: reservation?.metodoPago },
     { label: "ESTADO DE PAGO", value: reservation?.estadoPago },
+    
   ];
 
   return (

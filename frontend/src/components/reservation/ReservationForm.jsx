@@ -1,12 +1,70 @@
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 
-function ReservationForm({ cancha }) {
+function ReservationForm() {
 
   const navigate = useNavigate();
 
+const location = useLocation();
 
+const cancha = location.state;
+
+const [reserva, setReserva] = useState({
+  fecha: "",
+  hora: "",
+  horas: 1,
+});
+
+const handleChange = (e) => {
+  setReserva({
+    ...reserva,
+    [e.target.name]: e.target.value,
+  });
+};
+
+const realizarReserva = async () => {
+
+  try {
+
+    const usuario = JSON.parse(
+      localStorage.getItem("usuario")
+    );
+
+    await axios.post(
+      "http://localhost:3000/api/reservas/register",
+      {
+        id_usuario: usuario.id,
+        id_espacio_deportivo: cancha.id,
+        fecha: reserva.fecha,
+        hora: reserva.hora,
+        horas: reserva.horas,
+      }
+    );
+
+    navigate("/reservation-success", {
+      state: {
+        cancha,
+        reserva,
+      },
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      error.response?.data?.mensaje ||
+      "No se pudo registrar la reserva."
+    );
+
+  }
+
+};
+
+console.log(reserva);
 
   return (
 
@@ -125,9 +183,10 @@ function ReservationForm({ cancha }) {
         <div className="relative">
 
           <input
-
             type="date"
-
+            name="fecha"
+            value={reserva.fecha}
+            onChange={handleChange}
             className="w-full h-[44px] border border-[#D9D9D9] rounded-full px-6 pr-12 outline-none"
 
             style={{
@@ -178,8 +237,10 @@ function ReservationForm({ cancha }) {
         <div className="relative">
 
 
-          <select
-
+         <select
+            name="hora"
+            value={reserva.hora}
+            onChange={handleChange}
             className="w-full h-[44px] border border-[#D9D9D9] rounded-full px-6 appearance-none outline-none bg-white"
 
             style={{
@@ -188,32 +249,12 @@ function ReservationForm({ cancha }) {
             }}
 
           >
-
-            <option>
-              Seleccionar hora
-            </option>
-
-            <option>
-              08:00
-            </option>
-
-            <option>
-              09:00
-            </option>
-
-            <option>
-              10:00
-            </option>
-
-            <option>
-              11:00
-            </option>
-
-            <option>
-              12:00
-            </option>
-
-
+           <option value="">Seleccionar hora</option>
+            <option>08:00</option>
+            <option>09:00</option>
+            <option>10:00</option>
+            <option>11:00</option>
+            <option>12:00</option>
           </select>
 
 
@@ -257,7 +298,9 @@ function ReservationForm({ cancha }) {
         <input
 
           type="number"
-
+          name="horas"
+          value={reserva.horas}
+          onChange={handleChange}
           min="1"
 
           max="12"
@@ -286,27 +329,16 @@ function ReservationForm({ cancha }) {
 
       <div className="flex justify-between gap-5">
 
-
-
         <button
-
-          onClick={() => navigate("/reservation-success")}
-
+             onClick={realizarReserva}
           className="flex-1 h-[42px] rounded-full bg-[#C7F34A] hover:bg-[#b8e43f] transition"
-
           style={{
-            fontFamily:"Prompt",
-            fontSize:"14px",
+            fontFamily: "Prompt",
+            fontSize: "14px",
           }}
-
         >
-
           REALIZAR RESERVA
-
-
         </button>
-
-
 
 
 
