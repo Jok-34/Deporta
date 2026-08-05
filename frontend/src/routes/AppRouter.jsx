@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "../pages/Home";
@@ -15,27 +16,72 @@ import Reservation from "../pages/Reservation";
 import ReservationSuccess from "../pages/ReservationSuccess";
 import Payment from "../pages/Payment";
 
+
 function AppRouter() {
+
   return (
+
     <BrowserRouter>
+
       <Routes>
+
         <Route path="/" element={<Home />} />
+
         <Route path="/login" element={<Login />} />
+
         <Route path="/register" element={<Register />} />
+
         <Route path="/search" element={<SearchFields />} />
+
         <Route path="/register-complex" element={<RegisterComplex />} />
+
         <Route path="/register-success" element={<RegisterSuccess />} />
-        <Route path="/register-sport-space" element={<RegisterSportSpace />} />
-        <Route path="/register-sport-space-success" element={<RegisterSportSpaceSuccess />} />
+
+        <Route 
+          path="/register-sport-space" 
+          element={<RegisterSportSpace />} 
+        />
+
+        <Route 
+          path="/register-sport-space-success" 
+          element={<RegisterSportSpaceSuccess />} 
+        />
+
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/reservation-guide"element={<ReservationGuide />} />
-        <Route path="/search-courts" element={<SearchCourts />} />
-        <Route path="/reservation" element={<Reservation />} />
-        <Route path="/reservation-success" element={<ReservationSuccess />} />
-        <Route path="/payment" element={<Payment />} />
+
+        <Route 
+          path="/reservation-guide" 
+          element={<ReservationGuide />} 
+        />
+
+        <Route 
+          path="/search-courts" 
+          element={<SearchCourts />} 
+        />
+
+
+        <Route 
+          path="/reservation" 
+          element={<Reservation />} 
+        />
+
+        <Route 
+          path="/reservation-success" 
+          element={<ReservationSuccess />} 
+        />
+
+        <Route 
+          path="/payment" 
+          element={<Payment />} 
+        />
+
       </Routes>
+
     </BrowserRouter>
+
   );
+
 }
+
 
 export default AppRouter;

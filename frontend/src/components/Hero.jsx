@@ -1,4 +1,4 @@
-import hero from "../assets/images/hero.png";
+import hero from "../assets/images/Hero.png";
 import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 function LoginForm() {
   const navigate = useNavigate();
 
@@ -8,31 +9,64 @@ function LoginForm() {
   const [contrasena, setContrasena] = useState("");
   const [mensaje, setMensaje] = useState("");
 
+  // Validaciones del frontend
+  const [errores, setErrores] = useState({
+    correo: "",
+    contrasena: "",
+  });
+
   const handleLogin = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const respuesta = await axios.post(
-      "http://localhost:3000/api/usuarios/login",
-      {
-        correo,
-        contrasena,
-      }
-    );
+    const nuevosErrores = {
+      correo: "",
+      contrasena: "",
+    };
 
-    setMensaje("");
+    let valido = true;
 
-    const usuario = respuesta.data.usuario;
-
-    if (usuario.id_rol === 1) {
-      navigate("/dashboard");
-    } else {
-      navigate("/search-courts");
+    if (!correo.trim()) {
+      nuevosErrores.correo = "Ingrese su correo.";
+      valido = false;
+    } else if (!/\S+@\S+\.\S+/.test(correo)) {
+      nuevosErrores.correo = "Ingrese un correo válido.";
+      valido = false;
     }
-  } catch (error) {
-    setMensaje(error.response?.data?.mensaje || "Error al iniciar sesión");
-  }
-};
+
+    if (!contrasena.trim()) {
+      nuevosErrores.contrasena = "Ingrese su contraseña.";
+      valido = false;
+    }
+
+    setErrores(nuevosErrores);
+
+    if (!valido) return;
+
+    try {
+      const respuesta = await axios.post(
+        "http://localhost:3000/api/usuarios/login",
+        {
+          correo,
+          contrasena,
+        }
+      );
+
+      setMensaje("");
+
+      const usuario = respuesta.data.usuario;
+
+      if (usuario.id_rol === 1) {
+        navigate("/dashboard");
+      } else {
+        navigate("/search-courts");
+      }
+
+    } catch (error) {
+      setMensaje(
+        error.response?.data?.mensaje || "Error al iniciar sesión"
+      );
+    }
+  };
 
   return (
     <section className="flex min-h-screen">
@@ -74,10 +108,12 @@ function LoginForm() {
           </h2>
 
           <form
-          onSubmit={handleLogin} 
-          className="flex flex-col gap-5">
+            onSubmit={handleLogin}
+            className="flex flex-col gap-5"
+          >
 
             <div>
+
               <label
                 className="block mb-2 text-[#777777] text-[14.5px] font-bold"
                 style={{ fontFamily: "Instrument Sans" }}
@@ -86,19 +122,31 @@ function LoginForm() {
               </label>
 
               <input
-              type="email"
-              placeholder="Ingresa tu correo"
-              value={correo}
-             onChange={(e) => {
-  setCorreo(e.target.value);
-  setMensaje("");
-}}
-              className="w-full rounded-full border border-gray-300 px-6 py-3"
-              style={{ fontFamily: "Red Hat Text" }}
+                type="email"
+                placeholder="Ingresa tu correo"
+                value={correo}
+                onChange={(e) => {
+                  setCorreo(e.target.value);
+                  setMensaje("");
+                  setErrores({
+                    ...errores,
+                    correo: "",
+                  });
+                }}
+                className="w-full rounded-full border border-gray-300 px-6 py-3"
+                style={{ fontFamily: "Red Hat Text" }}
               />
+
+              {errores.correo && (
+                <p className="text-red-500 text-sm mt-2">
+                  {errores.correo}
+                </p>
+              )}
+
             </div>
 
             <div>
+
               <label
                 className="block mb-2 text-[#777777] text-[14.5px] font-bold"
                 style={{ fontFamily: "Instrument Sans" }}
@@ -107,16 +155,27 @@ function LoginForm() {
               </label>
 
               <input
-  type="password"
-  placeholder="Ingresa tu contraseña"
-  value={contrasena}
-  onChange={(e) => {
-  setContrasena(e.target.value);
-  setMensaje("");
-}}
-  className="w-full rounded-full border border-gray-300 px-6 py-3"
-  style={{ fontFamily: "Red Hat Text" }}
-/>
+                type="password"
+                placeholder="Ingresa tu contraseña"
+                value={contrasena}
+                onChange={(e) => {
+                  setContrasena(e.target.value);
+                  setMensaje("");
+                  setErrores({
+                    ...errores,
+                    contrasena: "",
+                  });
+                }}
+                className="w-full rounded-full border border-gray-300 px-6 py-3"
+                style={{ fontFamily: "Red Hat Text" }}
+              />
+
+              {errores.contrasena && (
+                <p className="text-red-500 text-sm mt-2">
+                  {errores.contrasena}
+                </p>
+              )}
+
             </div>
 
             <button
@@ -125,11 +184,12 @@ function LoginForm() {
             >
               INICIAR SESIÓN
             </button>
+
             {mensaje && (
-  <p className="text-red-600 text-center text-sm mt-2">
-    {mensaje}
-  </p>
-)}
+              <p className="text-red-600 text-center text-sm mt-2">
+                {mensaje}
+              </p>
+            )}
 
           </form>
 
@@ -139,7 +199,7 @@ function LoginForm() {
           >
             ¿No tienes una cuenta?{" "}
             <Link to="/register" className="text-[#86BE00]">
-            Regístrate
+              Regístrate
             </Link>
           </p>
 

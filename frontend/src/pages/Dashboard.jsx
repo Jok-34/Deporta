@@ -2,31 +2,47 @@ import Sidebar from "../components/dashboard/Sidebar";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import DashboardStats from "../components/dashboard/DashboardStats";
 import ReservationTable from "../components/dashboard/ReservationTable";
-import DashboardCharts from "../components/dashboard/DashboardCharts";
+import EditSportSpace from "../components/dashboard/ManageSportSpaces";
 
 function Dashboard() {
   return (
     <div className="flex min-h-screen">
+
       <Sidebar />
 
       <main className="flex-1 bg-[var(--color-surface)] p-8">
+
         <DashboardHeader />
 
         <DashboardStats />
 
-        {/* Tabla + gráficos */}
+
+        {/* Reservaciones + Administración del complejo */}
         <div className="flex gap-8 mt-6 items-start">
-          {/* Izquierda */}
-          <div className="w-[55%]">
+
+
+          {/* Tabla de reservaciones */}
+          <div className="w-[60%]">
+
             <ReservationTable />
+
           </div>
 
-          {/* Derecha */}
-          <div className="w-[45%]">
-            <DashboardCharts />
+
+
+          {/* Editar complejo / espacio deportivo */}
+          <div className="w-[40%]">
+
+            <EditSportSpace />
+
           </div>
+
+
         </div>
+
+
       </main>
+
     </div>
   );
 }
