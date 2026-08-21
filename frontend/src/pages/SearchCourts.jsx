@@ -12,48 +12,10 @@ import axios from "axios";
 function SearchCourts() {
 
 
-  const canchasDefault = [
-    {
-      idESPACIO_DEPORTIVO: 1,
-      nombre: "Cancha Fútbol 7",
-      complejo: "Complejo Deportivo Sur",
-      deporte: "Fútbol",
-      precio: 50,
-      estado: "Disponible",
-      aforo: 14,
-      ubicacion: "Villa María del Triunfo",
-      telefono: "987654321",
-      detalles: "Grass sintético, iluminación LED y camerinos."
-    },
-    {
-      idESPACIO_DEPORTIVO: 2,
-      nombre: "Cancha Básquet Premium",
-      complejo: "Sport Center Lima",
-      deporte: "Básquet",
-      precio: 40,
-      estado: "Disponible",
-      aforo: 10,
-      ubicacion: "San Juan de Miraflores",
-      telefono: "986543210",
-      detalles: "Cancha techada con piso profesional."
-    },
-    {
-      idESPACIO_DEPORTIVO: 3,
-      nombre: "Cancha Vóley Arena",
-      complejo: "Arena Deportiva",
-      deporte: "Vóley",
-      precio: 35,
-      estado: "Disponible",
-      aforo: 12,
-      ubicacion: "Miraflores",
-      telefono: "985432109",
-      detalles: "Piso especial, redes nuevas y zona de descanso."
-    }
-  ];
 
 
 
-  const [courts, setCourts] = useState(canchasDefault);
+ const [courts, setCourts] = useState([]);
 
 
   const [canchaDetalle, setCanchaDetalle] = useState(null);
